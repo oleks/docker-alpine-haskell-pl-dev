@@ -17,8 +17,19 @@ ARG username=ghc
 MAINTAINER oleks <oleks@oleks.info>
 
 RUN adduser -D -u 1000 ${username}
-USER ${username}
-
 WORKDIR /home/${username}/
+
+RUN apk --no-cache add \
+  --virtual .build-dependencies \
+  alpine-sdk
+
+USER ${username}
+RUN cabal update && \
+  cabal install parsec
+
+USER root
+RUN apk del .build-dependencies
+
+USER ${username}
 
 CMD ["ghci"]

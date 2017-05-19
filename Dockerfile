@@ -27,6 +27,7 @@ USER ${username}
 RUN cabal update && \
   cabal install \
     parsec \
+    happy \
     hlint
 
 USER root

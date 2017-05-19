@@ -25,7 +25,9 @@ RUN apk --no-cache add \
 
 USER ${username}
 RUN cabal update && \
-  cabal install parsec
+  cabal install \
+    parsec \
+    hlint
 
 USER root
 RUN apk del .build-dependencies
